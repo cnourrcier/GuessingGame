@@ -1,0 +1,1 @@
+This is a simple numbers guessing game written in Python.
