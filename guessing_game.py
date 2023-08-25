@@ -1,13 +1,14 @@
 import random
 
 class GuessingGame():
-    def __init__(self):
+    def __init__(self, max_attempts=10):
         self.target_number = random.randint(1,100)
         self.attempts = 0
-        self.max_attempts = 10
+        self.max_attempts = max_attempts
 
     def start(self):
         print("Welcome to the Guessing Game!")
+        self.max_attempts = int(input("Enter the maximum number of attempts to guess the number: "))
         self.play()
     
     def play(self):
