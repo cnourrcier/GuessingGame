@@ -5,6 +5,16 @@ class GuessingGame():
         self.target_number = random.randint(1,100)
         self.attempts = 0
         self.max_attempts = max_attempts
+        self.leaderboard = {}
+
+    def update_leaderboard(self, name):
+        self.leaderboard[name] = self.attempts
+
+    def display_leaderboard(self):
+        print("Leaderboard: ")
+        for name, attempts in self.leaderboard.items():
+            print(f"{name}: {attempts} attempts")
+
 
     def start(self):
         print("Welcome to the Guessing Game!")
@@ -18,6 +28,7 @@ class GuessingGame():
             self.check_guess(guess)
         
         print("Game over! The number was", self.target_number,".")
+        self.display_leaderboard()
 
         replay = input("Do you want to play again? (yes / no)")
         if replay.lower() == 'yes':
@@ -44,6 +55,7 @@ class GuessingGame():
             print("Try lower")
         else:
             print("Congratulations! You guessed the correct number.")
+            self.update_leaderboard(input("Enter your name for the leaderboard: "))
             self.attempts = self.max_attempts
     
 if __name__ == "__main__":
