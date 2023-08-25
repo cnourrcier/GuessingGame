@@ -19,6 +19,13 @@ class GuessingGame():
         
         print("Game over! The number was", self.target_number,".")
 
+        replay = input("Do you want to play again? (yes / no)")
+        if replay.lower() == 'yes':
+            self.__init__(self.max_attempts)
+            self.start()
+        else:
+            print("Thanks for playing!")
+
     def get_valid_guess(self):
         while True:
             try:
