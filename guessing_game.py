@@ -2,11 +2,30 @@ import random
 import json
 
 class GuessingGame():
-    def __init__(self, max_attempts=10):
+    def __init__(self, difficulty="medium"):
         self.target_number = random.randint(1,100)
         self.attempts = 0
-        self.max_attempts = max_attempts
+        self.max_attempts = self.difficulty_to_attempts(difficulty)
         self.load_leaderboard()
+
+    def set_difficulty(self):
+        difficulty_levels = ["easy", "medium", "hard"]
+        print("Choose a difficulty level: ")
+        for i, level in enumerate(difficulty_levels, 1):
+            print(f"{i}. {level}")
+        choice = int(input("Enter the number corresponding to your choice: "))
+        chosen_difficulty = difficulty_levels[choice - 1]
+        self.max_attempts = self.difficulty_to_attempts(chosen_difficulty)
+    
+    def difficulty_to_attempts(self, difficulty):
+        difficulty_levels = {
+            "easy":   15,
+            "medium": 10,
+            "hard":    5
+        }
+
+        return difficulty_levels[difficulty]
+
 
     def load_leaderboard(self):
         try:
@@ -33,7 +52,7 @@ class GuessingGame():
 
     def start(self):
         print("Welcome to the Guessing Game!")
-        self.max_attempts = int(input("Enter the maximum number of attempts to guess the number: "))
+        self.set_difficulty()
         self.play()
     
     def play(self):
