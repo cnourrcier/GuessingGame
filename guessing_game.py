@@ -1,14 +1,29 @@
 import random
+import json
 
 class GuessingGame():
     def __init__(self, max_attempts=10):
         self.target_number = random.randint(1,100)
         self.attempts = 0
         self.max_attempts = max_attempts
-        self.leaderboard = {}
+        self.load_leaderboard()
+
+    def load_leaderboard(self):
+        try:
+            with open("leaderboard.json", "r") as file:
+                self.leaderboard = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            self.leaderboard = {}
+
+    def save_leaderboard(self):
+        with open("leaderboard.json", "w") as file:
+            json.dump(self.leaderboard, file)
 
     def update_leaderboard(self, name):
-        self.leaderboard[name] = self.attempts
+        if name not in self.leaderboard:
+            self.leaderboard[name] = []
+        self.leaderboard[name].append(self.attempts)
+        self.save_leaderboard()
 
     def display_leaderboard(self):
         print("Leaderboard: ")
